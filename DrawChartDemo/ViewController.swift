@@ -73,7 +73,9 @@ class ViewController: UIViewController {
     }
     
     func drawYLabels() {
-        let values: [Int] = [0,5000,10000,15000,20000,25000,30000,35000,40000]
+        //let values: [Int] = [0,5000,10000,15000,20000,25000,30000,35000,40000]
+        let maxChartValue = chartDataSource.map { $0.value }.max() ?? 0
+        let values: [Int] = initYValues(maxValue: Int(maxChartValue))
         let maxValue = CGFloat(maxValueInChart())
         let chartHeight = chartView.frame.height * 0.8
         
@@ -90,13 +92,24 @@ class ViewController: UIViewController {
         }
     }
     
+    func initYValues(maxValue: Int) -> [Int] {
+        let numberOfStep = 6
+        var values: [Int] = []
+        let step = maxValue / (numberOfStep - 1)
+        for i in 0..<numberOfStep  {
+            let value = step * i
+            values.append(value)
+        }
+        return values
+    }
+    
     func initChartData(){
         let thang1 = ChartData(type: "Jan", value: 12000, color: .red)
         let thang2 = ChartData(type: "Feb", value: 20000, color: .green)
         let thang3 = ChartData(type: "Mar", value: 15000, color: .yellow)
         let thang4 = ChartData(type: "Apr", value: 19000, color: .purple)
         let thang5 = ChartData(type: "May", value: 7000, color: .orange)
-        let thang6 = ChartData(type: "Jun", value: 30000, color: .cyan)
+        let thang6 = ChartData(type: "Jun", value: 35000, color: .cyan)
         let thang7 = ChartData(type: "Jul", value: 25000, color: .darkGray)
         let thang8 = ChartData(type: "Aug", value: 4000, color: .magenta)
         let thang9 = ChartData(type: "Sep", value: 28000, color: .purple)
